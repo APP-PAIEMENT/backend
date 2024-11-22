@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.models.Compte;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,12 @@ public class UserService {
 
     // Récupérer un utilisateur par ID
     public Optional<User> getUserById(String id) {
-        return userRepository.findById(id);
+        Optional<User> userOptional =  userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            return Optional.of(userOptional.get());
+        } else {
+            throw new RuntimeException("User not found");
+        }
     }
 
     // Mettre à jour un utilisateur

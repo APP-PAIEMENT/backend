@@ -14,6 +14,9 @@ public class CompteService {
     private CompteRepository repository;
 
     public Compte createCompte(Compte compte) {
+        if (repository.findByNumerousCompte(compte.getNumerousCompte()).isPresent()) {
+            throw new IllegalArgumentException("NumerousCompte already in use");
+        }
         return repository.save(compte);
     }
 
@@ -29,15 +32,20 @@ public class CompteService {
         return repository.findByUserId(userId);
     }
 
-    public Compte updateCompte(String id, Compte updatedCompte) {
-        return repository.findById(id)
-                .map(existingCompte -> {
-                    existingCompte.setBalance(updatedCompte.getBalance());
-                    existingCompte.setTypeCompte(updatedCompte.getTypeCompte());
-                    return repository.save(existingCompte);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Compte not found"));
+    public Optional<Compte> getComptesByNumerousCompte(String numerousCompte) {
+        return repository.findByNumerousCompte(numerousCompte);
     }
+
+
+//    public Compte updateCompte(String id, Compte updatedCompte) {
+//        return repository.findById(id)
+//                .map(existingCompte -> {
+//                    existingCompte.setBalance(updatedCompte.getBalance());
+//                    existingCompte.setTypeCompte(updatedCompte.getTypeCompte());
+//                    return repository.save(existingCompte);
+//                })
+//                .orElseThrow(() -> new IllegalArgumentException("Compte not found"));
+//    }
 
     public void deleteCompte(String id) {
         repository.deleteById(id);

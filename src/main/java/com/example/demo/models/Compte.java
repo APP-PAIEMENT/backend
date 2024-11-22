@@ -1,7 +1,8 @@
 package com.example.demo.models;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "comptes")
@@ -9,15 +10,15 @@ public class Compte {
     @Id
     private String id;
 
-    @DBRef
-    private User user; // Référence à l'utilisateur propriétaire du compte
+    private String userId; // Référence à l'utilisateur propriétaire du compte
 
-    @DBRef
-    private TypeCompte typeCompte; // Référence au type de compte
+    private String typeCompteId; // Référence au type de compte
 
     private double balance; // Solde du compte
+    @NotBlank(message = "numerousCompte is required")
+    @Size(min = 9, message = "numerousCompte must be at least 9 characters")
+    private  String numerousCompte;
 
-    // Getters et Setters
     public String getId() {
         return id;
     }
@@ -26,20 +27,20 @@ public class Compte {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public TypeCompte getTypeCompte() {
-        return typeCompte;
+    public String getTypeCompteId() {
+        return typeCompteId;
     }
 
-    public void setTypeCompte(TypeCompte typeCompte) {
-        this.typeCompte = typeCompte;
+    public void setTypeCompteId(String typeCompteId) {
+        this.typeCompteId = typeCompteId;
     }
 
     public double getBalance() {
@@ -48,5 +49,13 @@ public class Compte {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public String getNumerousCompte() {
+        return numerousCompte;
+    }
+
+    public void setNumerousCompte(Number numerousCompte) {
+        this.numerousCompte = numerousCompte.toString();
     }
 }

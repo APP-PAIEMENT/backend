@@ -35,10 +35,10 @@ public class CompteController {
         return service.getComptesByUserId(userId);
     }
 
-    @PutMapping("/{id}")
-    public Compte updateCompte(@PathVariable String id, @Valid @RequestBody Compte updatedCompte) {
-        return service.updateCompte(id, updatedCompte);
-    }
+//    @PutMapping("/{id}")
+//    public Compte updateCompte(@PathVariable String id, @Valid @RequestBody Compte updatedCompte) {
+//        return service.updateCompte(id, updatedCompte);
+//    }
 
     @DeleteMapping("/{id}")
     public String deleteCompte(@PathVariable String id) {

@@ -24,9 +24,6 @@ public class User {
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
-    // Liste des comptes associés à cet utilisateur
-    private List<Compte> comptes;
-
     // Getters et Setters
     public String getId() {
         return id;
@@ -60,11 +57,5 @@ public class User {
         this.password = password;
     }
 
-    public List<Compte> getComptes() {
-        return comptes;
-    }
 
-    public void setComptes(List<Compte> comptes) {
-        this.comptes = comptes;
-    }
 }

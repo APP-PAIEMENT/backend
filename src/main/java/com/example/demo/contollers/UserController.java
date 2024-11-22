@@ -1,7 +1,9 @@
 package com.example.demo.contollers;
 
 
+import com.example.demo.models.Compte;
 import com.example.demo.models.User;
+import com.example.demo.services.CompteService;
 import com.example.demo.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CompteService compteService;
+
     // Endpoint pour créer un utilisateur
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
@@ -32,8 +37,20 @@ public class UserController {
     }
 
     // Endpoint pour récupérer un utilisateur par ID
-    @GetMapping("/{id}")
+    @GetMapping("/compte/{id}")
     public Optional<User> getUserById(@PathVariable String id) {
+        Optional<Compte> compteOptional =compteService.getComptesByNumerousCompte(id);
+        if (compteOptional.isPresent()) {
+            Compte compte =compteOptional.get();
+            return userService.getUserById(compte.getUserId());
+        } else {
+            throw new RuntimeException("Invalid credentials: User not found");
+        }
+    }
+
+    // Endpoint pour récupérer un utilisateur par ID
+    @GetMapping("/{id}")
+    public Optional<User> getUserByNumberCompte(@PathVariable String id) {
         return userService.getUserById(id);
     }
 
